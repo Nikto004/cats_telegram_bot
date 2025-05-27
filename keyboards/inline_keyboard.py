@@ -6,7 +6,8 @@ def main_button():
     btn1 = InlineKeyboardButton(text='Да', callback_data='yes')
     btn2 = InlineKeyboardButton(text='Нет', callback_data='no')
     btn3 = InlineKeyboardButton(text='Покажи котиков', callback_data='cats')
-    main_markup.add(btn1, btn2).add(btn3)
+    btn4 = InlineKeyboardButton(text='Покажи погоду', callback_data='weather')
+    main_markup.add(btn1, btn2).add(btn3).add(btn4)
     return main_markup
 
 

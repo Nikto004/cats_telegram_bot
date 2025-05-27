@@ -16,6 +16,24 @@ def start_cmd(message: types.Message):
     )
 
 
+@bot.callback_query_handler(func=lambda call: call.data == 'weather')
+def send_weather(callback: types.CallbackQuery):
+    text = 'Отправь мне свое местоположение и  я отправлю тебе погоду'
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    knb1 = types.KeyboardButton('Получить погоду', request_location=True)
+    keyboard.add(knb1)
+    bot.send_message(callback.message.chat.id, text=text, reply_markup=keyboard)
+
+
+@bot.message_handler(content_types=['location'])
+def get_weathers(message: types.Message):
+    lon = message.location.longitude
+    lat = message.location.latitude
+    from wiki_bot.core.weather import get_weather
+    result = get_weather(lon=lon, lat=lat)
+    bot.send_message(message.chat.id, text=result)
+
+
 @bot.callback_query_handler(func=lambda call: call.data == 'yes' or call.data == 'no')
 def answer_cmd(callback: types.CallbackQuery):
     if callback.data == 'yes':
